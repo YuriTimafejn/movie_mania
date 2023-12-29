@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\api\v1\GenderController;
+use App\Http\Controllers\api\v1\StudioController;
+use App\Http\Controllers\api\v1\DirectorController;
 use App\Http\Controllers\api\v1\VideoController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,5 +21,9 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-
-Route::get('v1/video', [VideoController::class, 'index']);
+Route::prefix('v1')->group(function(){
+    Route::resource('gender', GenderController::class);
+    Route::resource('studio', StudioController::class);
+    Route::resource('studio', DirectorController::class);
+    Route::resource('video', VideoController::class);
+});
