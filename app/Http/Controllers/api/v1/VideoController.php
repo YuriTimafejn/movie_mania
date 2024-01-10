@@ -8,10 +8,15 @@ use Illuminate\Http\Request;
 class VideoController extends Controller
 {
     public function index() {
-        return "";
+        return "Tested principal route";
+    }
+
+    public function listBy($slug) {
+        return $slug;
     }    
     
     public function store(Request $request) {
+        dd($request->get('content'));
         return "";
     }
 

@@ -12,6 +12,7 @@ class GenderController extends Controller
     }    
     
     public function store(Request $request) {
+        dd($request->all());
         return "";
     }
 
