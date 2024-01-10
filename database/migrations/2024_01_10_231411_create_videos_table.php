@@ -11,15 +11,24 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('studios', function (Blueprint $table) {
+        Schema::create('videos', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_unicode_ci';
 
             $table->id();
-            $table->timestamps();
+            $table->string('title');
+            $table->string('original_title');
+            $table->longText('sinopse');
+            $table->enum('type', ['movie', 'web video', 'series']);
+            $table->decimal('score', 3, 1);
+            $table->decimal('personal_score', 3, 1);
+            $table->boolean('watched', false);
             $table->longText('notes');
             $table->boolean('active');
+            $table->foreignId('directors_id')->constrained();
+            $table->foreignId('studios_id')->constrained();
+            $table->timestamps();
         });
     }
 
@@ -28,6 +37,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('studios');
+        Schema::dropIfExists('videos');
     }
 };
