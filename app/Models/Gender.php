@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Gender extends Model
 {
     use HasFactory;
+
+    /**
+     * @var array
+     */
+    protected $fillable = ['gender', 'notes'];
 }
