@@ -23,9 +23,9 @@ return new class extends Migration
             $table->enum('type', ['movie', 'web video', 'series']);
             $table->decimal('score', 3, 1);
             $table->decimal('personal_score', 3, 1);
-            $table->boolean('watched', false);
+            $table->boolean('watched')->default(false);
             $table->longText('notes');
-            $table->boolean('active');
+            $table->boolean('active')->default(true);
             $table->foreignId('directors_id')->constrained();
             $table->foreignId('studios_id')->constrained();
             $table->timestamps();

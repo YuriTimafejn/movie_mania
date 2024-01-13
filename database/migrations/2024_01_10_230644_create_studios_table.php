@@ -18,8 +18,9 @@ return new class extends Migration
 
             $table->id();
             $table->timestamps();
-            $table->longText('notes');
-            $table->boolean('active');
+            $table->string('studio');
+            $table->longText('notes')->nullable();
+            $table->boolean('active')->default(true);
         });
     }
 
