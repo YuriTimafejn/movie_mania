@@ -27,7 +27,7 @@ class StudioController extends Controller
     }
 
     public function update($id, Request $request) {
-        $studio = Studio::findOrFail($id)->update([
+        Studio::findOrFail($id)->update([
             'studio' => ucwords($request->studio),
             'notes' => ucwords($request->notes),
         ]);

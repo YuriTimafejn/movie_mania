@@ -10,4 +10,9 @@ class Director extends Model
 {
     use HasFactory;
     use SoftDeletes;
+
+    /**
+     * @var array
+     */
+    protected $fillable = ['director', 'notes'];
 }
