@@ -10,4 +10,9 @@ class Studio extends Model
 {
     use HasFactory;
     use SoftDeletes;
+
+    /**
+     * @var array
+     */
+    protected $fillable = ['studio', 'notes'];
 }
