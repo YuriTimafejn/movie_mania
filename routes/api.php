@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('v1')->group(function(){
     Route::resource('gender', GenderController::class)->except('create', 'edit');
     Route::resource('studio', StudioController::class)->except('create', 'edit');
-    Route::resource('studio', DirectorController::class)->except('create', 'edit');
+    Route::resource('director', DirectorController::class)->except('create', 'edit');
     Route::resource('video', VideoController::class)->except('create', 'edit');
 
     Route::get('video/filter/{slug}', [VideoController::class, 'listBy']);
