@@ -15,4 +15,9 @@ class Studio extends Model
      * @var array
      */
     protected $fillable = ['studio', 'notes'];
+
+    public function videos()
+    {
+        return $this->hasMany(Video::class);
+    }
 }

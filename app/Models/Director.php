@@ -15,4 +15,9 @@ class Director extends Model
      * @var array
      */
     protected $fillable = ['director', 'notes'];
+
+    public function videos()
+    {
+        return $this->hasMany(Video::class);
+    }
 }
