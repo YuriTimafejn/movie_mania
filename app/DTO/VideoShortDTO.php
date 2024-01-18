@@ -4,7 +4,7 @@ namespace App\DTO;
 
 use App\Models\Video;
 
-class VideoShortDTO 
+class VideoShortDTO
 {
     public $id;
     public $title;
@@ -16,7 +16,7 @@ class VideoShortDTO
     public $director;
     public $studio_id;
     public $studio;
-    
+
 
     public function __construct(Video $video) {
         $this->id = $video->id;
@@ -28,6 +28,6 @@ class VideoShortDTO
         $this->director_id = $video->director_id;
         if(!is_null($video->director)) $this->director = $video->director->director;
         $this->studio_id = $video->studio_id;
-        if(!is_null($video->studio)) $this->studio = $video->studio;        
+        if(!is_null($video->studio)) $this->studio = $video->studio->studio;
     }
 }
