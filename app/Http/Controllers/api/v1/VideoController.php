@@ -30,10 +30,6 @@ class VideoController extends Controller
         );
     }
 
-    public function listBy($slug) {
-        return $slug;
-    }
-
     public function store(Request $request): JsonResponse
     {
         $data = [
