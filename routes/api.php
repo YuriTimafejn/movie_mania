@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\v1\FilterController;
 use App\Http\Controllers\api\v1\GenderController;
 use App\Http\Controllers\api\v1\StudioController;
 use App\Http\Controllers\api\v1\DirectorController;
@@ -27,5 +28,6 @@ Route::prefix('v1')->group(function(){
     Route::resource('director', DirectorController::class)->except('create', 'edit');
     Route::resource('video', VideoController::class)->except('create', 'edit');
 
-    Route::get('video/filter/{slug}', [VideoController::class, 'listBy']);
+    Route::get('video/f/{filter}', [FilterController::class, 'index']);
+    Route::get('video/f/{filter}/{slug}', [FilterController::class, 'filter']);
 });
