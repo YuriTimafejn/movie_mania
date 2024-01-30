@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\api\v1;
 
+use App\DTO\VideoByFilterDTO;
 use App\Http\Controllers\Controller;
 use App\Models\Director;
 use App\Models\Gender;
@@ -27,7 +28,37 @@ class FilterController extends Controller
 
     public function filter($filter, $slug)
     {
+        switch ($filter) {
+            case "directors":
+                $director = Director::where('slug', $slug)->get();
 
+                $videos = Video::where(
+                    'director_id',
+                    $director->first->director->id
+                )->get();
+
+                return $this->getCollection($videos);
+            case "genders":
+                $gender = Gender::where('slug', $slug)->get();
+
+                $videos = Video::whereHas(
+                    'gender_id',
+                    function ($query) use ($gender) {
+                        $query->where('gender_id', $gender->first->gender->id);
+                    }
+                )->get();
+
+                return $this->getCollection($videos);
+            case "studios":
+                $studio = Studio::where('slug', $slug)->get();
+
+                $videos = Video::where(
+                    'studio_id',
+                    $studio->first->studio->id
+                )->get();
+
+                return $this->getCollection($videos);
+        }
     }
 
     private function returnFilter($filter)
@@ -43,9 +74,10 @@ class FilterController extends Controller
                         $director->id
                     )->get();
 
-                    $videosByDirectors[$director->director] = $video;
+                    if($video->isNotEmpty()){
+                        $videosByDirectors[$director->director] = $this->getCollection($video);
+                    }
                 }
-
                 return $videosByDirectors;
             case "genders":
                 $genders = Gender::all();
@@ -59,7 +91,9 @@ class FilterController extends Controller
                         }
                     )->get();
 
-                    $videosByGender[$gender->gender] = $video;
+                    if($video->isNotEmpty()) {
+                        $videosByGender[$gender->gender] = $this->getCollection($video);
+                    }
                 }
                 return $videosByGender;
             case "studios":
@@ -72,10 +106,29 @@ class FilterController extends Controller
                         $studio->id
                     )->get();
 
-                    $videosByStudio[$studio->studio] = $video;
+                    if($video->isNotEmpty()) {
+                        $videosByStudio[$studio->studio] = $this->getCollection($video);
+                    }
                 }
-
                 return $videosByStudio;
         }
+    }
+
+
+    /**
+     * @param $array
+     * @return array
+     */
+    private function getCollection($array): array
+    {
+        $collection = [];
+        foreach ($array as $v) {
+            $collection[] = [
+                "id" => $v->id,
+                "title" => $v->title,
+                "watched" => $v->watched,
+            ];
+        }
+        return $collection;
     }
 }
