@@ -12,19 +12,26 @@ class GenderController extends Controller
         $genders = Gender::where('active', true)->get();
 
         return response()->json($genders->makeHidden(['created_at', 'updated_at', 'deleted_at', 'active']), 200, [], JSON_PRETTY_PRINT);
-    }    
-    
+    }
+
     public function store(Request $request) {
         $data = [
             'gender' => strtoupper($request->gender),
             'notes' => $request->notes,
         ];
-        Gender::create($data);
+        $newGender = Gender::create($data);
+
+        return response()->json(
+            $newGender->makeHidden(['created_at', 'updated_at', 'deleted_at', 'active']),
+            200,
+            [],
+            JSON_PRETTY_PRINT
+        );
     }
 
     public function update(Request $request, $id) {
         Gender::findOrFail($id)->update([
-                'gender' => strtoupper($request->gender), 
+                'gender' => strtoupper($request->gender),
                 'notes' => strtoupper($request->notes)
             ]);
     }

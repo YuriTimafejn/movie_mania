@@ -12,18 +12,23 @@ class StudioController extends Controller
         $studios = Studio::where('active', true)->get();
 
         return response()->json($studios->makeHidden(['created_at', 'updated_at', 'deleted_at', 'active']), 200, [], JSON_PRETTY_PRINT);
-    }    
-    
-    
+    }
+
+
     public function store(Request $request) {
         $data = [
             'studio' => ucwords($request->studio),
             'notes' => ucwords($request->notes),
         ];
-        
-        $studio = Studio::create($data);
 
-        return response($studio->id, 200);
+        $newStudio = Studio::create($data);
+
+        return response()->json(
+            $newStudio->makeHidden(['created_at', 'updated_at', 'deleted_at', 'active']),
+            200,
+            [],
+            JSON_PRETTY_PRINT
+        );
     }
 
     public function update($id, Request $request) {

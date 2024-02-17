@@ -12,16 +12,16 @@ class DirectorController extends Controller
         $directors = Director::where('active', true)->get();
 
         return response()->json($directors->makeHidden(['created_at', 'updated_at', 'deleted_at', 'active']), 200, [], JSON_PRETTY_PRINT);
-    }    
-    
+    }
+
     public function store(Request $request) {
-        $newUser = Director::create([
+        $newDirector = Director::create([
             'director' => ucwords($request->director),
             'notes' => $request->notes,
         ]);
 
         return response()->json(
-            $newUser->makeHidden(['created_at', 'updated_at', 'deleted_at', 'active']),
+            $newDirector->makeHidden(['created_at', 'updated_at', 'deleted_at', 'active']),
             200,
             [],
             JSON_PRETTY_PRINT
