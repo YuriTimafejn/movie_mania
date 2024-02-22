@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\api\v1;
 
+use App\Http\Requests\StoreVideoRequest;
 use App\Models\Gender;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -30,7 +31,7 @@ class VideoController extends Controller
         );
     }
 
-    public function store(Request $request): JsonResponse
+    public function store(StoreVideoRequest $request): JsonResponse
     {
         $data = [
             "title" => $request->title,

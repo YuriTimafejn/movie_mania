@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api\v1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreGenderRequest;
 use Illuminate\Http\Request;
 use App\Models\Gender;
 
@@ -14,7 +15,7 @@ class GenderController extends Controller
         return response()->json($genders->makeHidden(['created_at', 'updated_at', 'deleted_at', 'active']), 200, [], JSON_PRETTY_PRINT);
     }
 
-    public function store(Request $request) {
+    public function store(StoreGenderRequest $request) {
         $data = [
             'gender' => strtoupper($request->gender),
             'notes' => $request->notes,

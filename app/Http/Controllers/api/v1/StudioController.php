@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api\v1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreStudioRequest;
 use Illuminate\Http\Request;
 use App\Models\Studio;
 
@@ -15,7 +16,7 @@ class StudioController extends Controller
     }
 
 
-    public function store(Request $request) {
+    public function store(StoreStudioRequest $request) {
         $data = [
             'studio' => ucwords($request->studio),
             'notes' => ucwords($request->notes),

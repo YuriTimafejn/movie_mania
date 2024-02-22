@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api\v1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreDirectorRequest;
 use Illuminate\Http\Request;
 use App\Models\Director;
 
@@ -14,7 +15,7 @@ class DirectorController extends Controller
         return response()->json($directors->makeHidden(['created_at', 'updated_at', 'deleted_at', 'active']), 200, [], JSON_PRETTY_PRINT);
     }
 
-    public function store(Request $request) {
+    public function store(StoreDirectorRequest $request) {
         $newDirector = Director::create([
             'director' => ucwords($request->director),
             'notes' => $request->notes,
