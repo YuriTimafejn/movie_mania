@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreVideoRequest extends FormRequest
 {
@@ -30,8 +31,16 @@ class StoreVideoRequest extends FormRequest
             "personal_score" => 'numeric',
             "watched" => 'boolean',
             "notes" => 'nullable',
-            "director_id" => 'numeric',
-            "studio_id" => 'required | numeric',
+            "director_id" => 'nullable | numeric | exists:directors,id',
+            "studio_id" => 'nullable | numeric | exists:studios,id',
+            "genders" => [
+                "array",
+                Rule::exists('genders', 'id')->where(
+                    function ($query) {
+                        $query->whereIn('id', $this->input('genders'));
+                    }
+                ),
+            ],
         ];
     }
 }

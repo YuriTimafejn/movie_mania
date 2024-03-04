@@ -39,7 +39,7 @@ class VideoCompleteDTO
     {
         $list = [];
         foreach ($array as $e) {
-            $list[] = $e['gender'];
+            $list[$e['id']] = $e['gender'];
         }
 
         return $list;

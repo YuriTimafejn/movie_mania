@@ -6,7 +6,6 @@ use App\Http\Requests\StoreVideoRequest;
 use App\Models\Gender;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Log;
 use App\Http\Controllers\Controller;
 use App\Models\Video;
 use App\DTO\VideoShortDTO;
@@ -17,7 +16,7 @@ class VideoController extends Controller
     public function index(): JsonResponse
     {
         $videos = Video::all();
-        $dto[] = null;
+        $dto = [];
 
         foreach ($videos as $video) {
             array_push($dto, new VideoShortDTO($video));
@@ -33,6 +32,7 @@ class VideoController extends Controller
 
     public function store(StoreVideoRequest $request): JsonResponse
     {
+//        dd(explode(',', $request->genders[0]));
         $data = [
             "title" => $request->title,
             "original_title" => $request->original_title,
@@ -47,6 +47,7 @@ class VideoController extends Controller
         ];
 
         $newVideo = Video::create($data);
+        $newVideo->genders()->attach(explode(',', $request->genders[0]));
         return response()->json(
             $newVideo->id,
             200,
@@ -67,7 +68,7 @@ class VideoController extends Controller
             "watched"=> $request->watched,
             "notes"=> $request->notes,
             "director_id"=> $request->director_id,
-            "studio_id"=> $request->studio_id
+            "studio_id"=> $request->studio_id,
         ]);
     }
 
