@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api\v1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreDirectorRequest;
+use App\Http\Requests\UpdateDirectorRequest;
 use Illuminate\Http\Request;
 use App\Models\Director;
 
@@ -29,11 +30,8 @@ class DirectorController extends Controller
         );
     }
 
-    public function update(Request $request, $id) {
-        Director::findOrFail($id)->update([
-            'director' => ucwords($request->director),
-            'notes' => $request->notes,
-        ]);
+    public function update(UpdateDirectorRequest $request, $id) {
+        Director::findOrFail($id)->update($request->all());
 
         return response()->json(
             Director::findOrFail($id)->makeHidden(['created_at', 'updated_at', 'deleted_at', 'active']),

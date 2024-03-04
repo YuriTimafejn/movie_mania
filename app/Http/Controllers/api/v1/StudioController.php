@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api\v1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreStudioRequest;
+use App\Http\Requests\UpdateStudioRequest;
 use Illuminate\Http\Request;
 use App\Models\Studio;
 
@@ -32,11 +33,8 @@ class StudioController extends Controller
         );
     }
 
-    public function update($id, Request $request) {
-        Studio::findOrFail($id)->update([
-            'studio' => ucwords($request->studio),
-            'notes' => ucwords($request->notes),
-        ]);
+    public function update($id, UpdateStudioRequest $request) {
+        Studio::findOrFail($id)->update($request->all());
 
         $updatedStudio = Studio::findOrFail($id);
 

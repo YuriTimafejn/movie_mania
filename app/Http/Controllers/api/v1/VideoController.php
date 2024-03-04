@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api\v1;
 
 use App\Http\Requests\StoreVideoRequest;
+use App\Http\Requests\UpdateVideoRequest;
 use App\Models\Gender;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -49,7 +50,7 @@ class VideoController extends Controller
         $newVideo = Video::create($data);
         $newVideo->genders()->attach(explode(',', $request->genders[0]));
         return response()->json(
-            $newVideo->id,
+            "Video " . $newVideo->id . " has created",
             200,
             [],
             JSON_PRETTY_PRINT
@@ -57,19 +58,15 @@ class VideoController extends Controller
     }
 
 
-    public function update(Request $request, $id) {
-        Gender::findOrFail($id)->update([
-            "title"=> $request->title,
-            "original_title"=> $request->original_title,
-            "sinopse"=> $request->sinopse,
-            "type"=> $request->type,
-            "score"=> $request->score,
-            "personal_score"=> $request->personal_score,
-            "watched"=> $request->watched,
-            "notes"=> $request->notes,
-            "director_id"=> $request->director_id,
-            "studio_id"=> $request->studio_id,
-        ]);
+    public function update(UpdateVideoRequest $request, $id) {
+        Video::findOrFail($id)->update($request->all());
+
+        return response()->json(
+            "Video " . $id . " has updated",
+            200,
+            [],
+            JSON_PRETTY_PRINT
+        );
     }
 
     public function destroy($id) {

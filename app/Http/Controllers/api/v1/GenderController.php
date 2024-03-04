@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api\v1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreGenderRequest;
+use App\Http\Requests\UpdateGenderRequest;
 use Illuminate\Http\Request;
 use App\Models\Gender;
 
@@ -30,11 +31,8 @@ class GenderController extends Controller
         );
     }
 
-    public function update(Request $request, $id) {
-        Gender::findOrFail($id)->update([
-                'gender' => strtoupper($request->gender),
-                'notes' => strtoupper($request->notes)
-            ]);
+    public function update(UpdateGenderRequest $request, $id) {
+        Gender::findOrFail($id)->update($request->all());
     }
 
     public function destroy($id) {
