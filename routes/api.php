@@ -5,6 +5,8 @@ use App\Http\Controllers\api\v1\GenderController;
 use App\Http\Controllers\api\v1\StudioController;
 use App\Http\Controllers\api\v1\DirectorController;
 use App\Http\Controllers\api\v1\VideoController;
+use App\Http\Controllers\api\v1\VideoGenderController;
+use App\Http\Controllers\api\v1\VideoImageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,4 +32,10 @@ Route::prefix('v1')->group(function(){
 
     Route::get('video/f/{filter}', [FilterController::class, 'index']);
     Route::get('video/f/{filter}/{slug}', [FilterController::class, 'filter']);
+
+    Route::post('video/{idVideo}/agender', [VideoGenderController::class, 'addGender']);
+    Route::delete('video/{idVideo}/rgender', [VideoGenderController::class, 'removeGender']);
+
+//    Route::post('video/{idVideo}/aimage', [VideoImageController::class, 'addImage']);
+//    Route::delete('video/{idVideo}/rimage', [VideoImageController::class, 'removeImage']);
 });
