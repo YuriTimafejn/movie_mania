@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\VideoTypeRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -26,7 +27,7 @@ class StoreVideoRequest extends FormRequest
             "title" => 'required | unique:App\Models\Video,title',
             "original_title" => 'nullable',
             "sinopse" => 'nullable',
-            "type" => 'required',
+            "type" => ['required', new VideoTypeRule],
             "score" => 'numeric',
             "personal_score" => 'numeric',
             "watched" => 'boolean',
